@@ -7,10 +7,16 @@ class Stac extends JFrame
 {int x=600,y=600,w=300,h=50;
 private void moverect(double v)
 {
-if(x>0)
-x-=v;
-else 
-x+=v;	
+double vel=-3;
+if(x<0)
+vel=v;
+else if(x>750)
+vel=(-v);
+
+x+=vel;
+
+
+
 }
 private void nextrect()
 {
@@ -43,6 +49,7 @@ public void paint(Graphics g)
  super.paint(g);
 
  
+	
 // g.drawRect(x,y,w,h);
 
  
@@ -59,7 +66,7 @@ public static void main(String[]args)throws InterruptedException {
  {
 	rect.moverect(1.5);
 			rect.repaint();
-			Thread.sleep(10);
+			Thread.sleep(20);
 	 
 	 
  }
