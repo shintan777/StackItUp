@@ -8,6 +8,7 @@ import java.util.*;
 @SuppressWarnings({ "serial", "unused" })
 class Stac extends JFrame{
 	Block blk = new Block();
+	Block nblk = new Block();
 		Stac()
 		{   super("StackItUp!!!");
 			addKeyListener(new KeyListener() {
@@ -21,23 +22,28 @@ class Stac extends JFrame{
 				@Override
 				public void keyPressed(KeyEvent e) {
 					blk.keyPressed(e);
-				}
+					nblk.nextrect();
+				/*	if(blk.cntr>=1)
+					{nblk.keyPressed(e);
+				}*/}
 			});
 			setFocusable(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(30,30,720,720);
-			//setSize(720,720);
 			setBackground(Color.darkGray);
 			setResizable(false);
 			setVisible(true);
+			
 			}		
 		public void move() {
 			blk.moverect();
+			nblk.moverect();
 		}
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
 			blk.paint(g);
+			nblk.paint(g);
 		}
 
 		public static void main(String[]args)throws InterruptedException {
@@ -52,9 +58,19 @@ class Stac extends JFrame{
 		}
 	}
 }
+@SuppressWarnings("serial")
 class Block extends JFrame{
-	int x=0,y=600,w=250,h=50,cntr=1;
+	int x,w,h,cntr,y;
 	double vel=2.0;
+	Block(){
+		int x=0,w=250,h=50,cntr=0,y=600;
+		double vel=2.0;
+		this.x=x;
+		this.y=y;
+		this.w=w;
+		this.h= h;
+		this.vel=vel;
+	}
 	public void moverect()
 	{	
 		if(x+vel<720 && x+vel>0)
@@ -70,9 +86,10 @@ class Block extends JFrame{
 		 }
 	}
 	public void nextrect()
-	{cntr++;
-	x=600;
-	y+=50;	
+	{	cntr+=1;
+	System.out.println(cntr);
+		y-=2*h;
+		
 	}
 	public void drop(){
 		
@@ -86,8 +103,7 @@ class Block extends JFrame{
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
-			y = y+h;
-			vel = 0;
+			vel = 0;		
 		}
 	
 	}
