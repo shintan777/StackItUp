@@ -7,6 +7,7 @@ import java.util.*;
 
 @SuppressWarnings({ "serial", "unused" })
 class Stac extends JFrame{
+	static int cntr=0;
 	JLabel  t1;
 	Block blk = new Block();
 	Block nblk = new Block();
@@ -26,6 +27,9 @@ class Stac extends JFrame{
 				public void keyPressed(KeyEvent e) {
 					blk.keyPressed(e);
 					nblk.nextrect();
+					 cntr++;
+				System.out.println(cntr);
+				t1.setText("SCORE :  "+cntr);
 					
 				//if(blk.cntr>=1)
 					//{nblk.keyPressed(e);
@@ -40,13 +44,17 @@ class Stac extends JFrame{
 			setBackground(Color.darkGray);
 			setResizable(false);
 			setVisible(true);
-			t1.setText("SCORE :  "+blk.cntr);
+			
 		
 			
 			
 			add(t1);
 			
-			}		
+			}
+
+	
+	
+		
 		public void move() {
 			blk.moverect();
 			nblk.moverect();
@@ -77,7 +85,7 @@ class Block extends JFrame{
 	
 	double vel=2.0;
 	int x=0,w=250,h=50,y=600;
-	static int cntr=0;
+	 
 	Block(){
 		
 		
@@ -105,10 +113,10 @@ class Block extends JFrame{
 		 }
 	}
 	public void nextrect()
-	{	cntr+=1;
+	{	
 	
 	
-	System.out.println(cntr);
+
 		y-=h;
 		x=0;
 		
@@ -123,6 +131,7 @@ class Block extends JFrame{
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
+			
 			
 			vel = 0;		
 		}
