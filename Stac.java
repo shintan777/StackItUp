@@ -7,6 +7,7 @@ import java.util.*;
 
 @SuppressWarnings({ "serial", "unused" })
 class Stac extends JFrame{
+	JLabel  t1;
 	Block blk = new Block();
 	Block nblk = new Block();
 	
@@ -26,16 +27,24 @@ class Stac extends JFrame{
 					blk.keyPressed(e);
 					nblk.nextrect();
 					
-				if(blk.cntr>=1)
-					{nblk.keyPressed(e);
-				}}
+				//if(blk.cntr>=1)
+					//{nblk.keyPressed(e);
+				//}
+				}
 			});
+				t1 = new JLabel() ;
+			t1.setBounds(30,30,100,30) ; 
 			setFocusable(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(30,30,720,720);
+			setBounds(0,0,720,720);
 			setBackground(Color.darkGray);
 			setResizable(false);
 			setVisible(true);
+			t1.setText("SCORE :  "+blk.cntr);
+		
+			
+			
+			add(t1);
 			
 			}		
 		public void move() {
@@ -64,21 +73,22 @@ class Stac extends JFrame{
 @SuppressWarnings("serial")
 class Block extends JFrame{
 	
-	JTextField t1 = new JTextField() ;
-	int x,w,h,cntr,y;
+	
+	
 	double vel=2.0;
+	int x=0,w=250,h=50,y=600;
+	static int cntr=0;
 	Block(){
-		JTextField t1 = new JTextField() ;
-		int x=0,w=250,h=50,cntr=0,y=600;
+		
+		
 		double vel=2.0;
 		this.x=x;
 		this.y=y;
 		this.w=w;
 		this.h= h;
 		this.vel=vel;
-		this.t1=t1;
-		t1.setBounds(100,100,50,50);
-	add(t1);
+		
+	
 	}
 	public void moverect()
 	{	
@@ -97,16 +107,13 @@ class Block extends JFrame{
 	public void nextrect()
 	{	cntr+=1;
 	
-	t1.setText("score "+cntr);
-	add(t1);
+	
 	System.out.println(cntr);
 		y-=h;
 		x=0;
 		
 	}
-	public void drop(){
-		
-	 }
+	
 	@Override
 	public void paint(Graphics g)
 	{
@@ -121,13 +128,7 @@ class Block extends JFrame{
 		}
 	
 	}
-	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
-		{
-			vel = 2.0;		
-		}
 	
-	}
 
 	
 }
