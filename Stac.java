@@ -1,4 +1,4 @@
-package com.mini.project;
+
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +9,7 @@ import java.util.*;
 class Stac extends JFrame{
 	Block blk = new Block();
 	Block nblk = new Block();
+	
 		Stac()
 		{   super("StackItUp!!!");
 			addKeyListener(new KeyListener() {
@@ -17,15 +18,17 @@ class Stac extends JFrame{
 				}
 				@Override
 				public void keyReleased(KeyEvent e) {
-			      //blk.keyReleased(e);
+					
+			      //nblk.keyReleased(e);
 				}
 				@Override
 				public void keyPressed(KeyEvent e) {
 					blk.keyPressed(e);
 					nblk.nextrect();
-				/*	if(blk.cntr>=1)
+					
+				if(blk.cntr>=1)
 					{nblk.keyPressed(e);
-				}*/}
+				}}
 			});
 			setFocusable(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,9 +63,12 @@ class Stac extends JFrame{
 }
 @SuppressWarnings("serial")
 class Block extends JFrame{
+	
+	JTextField t1 = new JTextField() ;
 	int x,w,h,cntr,y;
 	double vel=2.0;
 	Block(){
+		JTextField t1 = new JTextField() ;
 		int x=0,w=250,h=50,cntr=0,y=600;
 		double vel=2.0;
 		this.x=x;
@@ -70,6 +76,9 @@ class Block extends JFrame{
 		this.w=w;
 		this.h= h;
 		this.vel=vel;
+		this.t1=t1;
+		t1.setBounds(100,100,50,50);
+	add(t1);
 	}
 	public void moverect()
 	{	
@@ -87,8 +96,12 @@ class Block extends JFrame{
 	}
 	public void nextrect()
 	{	cntr+=1;
+	
+	t1.setText("score "+cntr);
+	add(t1);
 	System.out.println(cntr);
-		y-=2*h;
+		y-=h;
+		x=0;
 		
 	}
 	public void drop(){
@@ -103,8 +116,18 @@ class Block extends JFrame{
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
+			
 			vel = 0;		
 		}
 	
 	}
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			vel = 2.0;		
+		}
+	
+	}
+
+	
 }
