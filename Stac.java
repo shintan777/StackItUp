@@ -9,11 +9,18 @@ import java.util.*;
 class Stac extends JFrame{
 	static int cntr=0;
 	JLabel  t1;
+
 	Block blk = new Block();
-	Block nblk = new Block();
+	//Block nblk = new Block();
+	//Block temp = new Block();
+	Block temp = (Block) blk.clone();
 	
 		Stac()
 		{   super("StackItUp!!!");
+				t1 = new JLabel() ;
+			t1.setBounds(200,100,50,30) ; 
+			
+			
 			addKeyListener(new KeyListener() {
 				@Override
 				public void keyTyped(KeyEvent e) {
@@ -21,12 +28,17 @@ class Stac extends JFrame{
 				@Override
 				public void keyReleased(KeyEvent e) {
 					
-			      //nblk.keyReleased(e);
+			      //nblk.keyReleased(e);:
 				}
 				@Override
 				public void keyPressed(KeyEvent e) {
+						try{
+					         Block temp = (Block) blk.clone();
+					}catch(CloneNotSupportedException c){}
+					
 					blk.keyPressed(e);
-					nblk.nextrect();
+					temp.nextrect();
+					
 					 cntr++;
 				System.out.println(cntr);
 				t1.setText("SCORE :  "+cntr);
@@ -36,36 +48,28 @@ class Stac extends JFrame{
 				//}
 				}
 			});
-				t1 = new JLabel() ;
-			t1.setBounds(30,30,100,30) ; 
 			setFocusable(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(0,0,720,720);
+			setSize(720,720);
 			setBackground(Color.darkGray);
 			setResizable(false);
 			setVisible(true);
-			
-		
-			
-			
 			add(t1);
-			
 			}
-
-	
-	
-		
+			
 		public void move() {
 			blk.moverect();
-			nblk.moverect();
+			temp.moverect();
+			
 		}
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
 			blk.paint(g);
-			nblk.paint(g);
+			temp.paint(g);
+		
+			
 		}
-
 		public static void main(String[]args)throws InterruptedException {
 		{
 			 Stac rect=new Stac();
@@ -79,25 +83,20 @@ class Stac extends JFrame{
 	}
 }
 @SuppressWarnings("serial")
-class Block extends JFrame{
-	
-	
-	
+ class Block extends JFrame implements Cloneable{
 	double vel=2.0;
 	int x=0,w=250,h=50,y=600;
-	 
-	Block(){
-		
-		
+	 Block(){
 		double vel=2.0;
 		this.x=x;
 		this.y=y;
 		this.w=w;
 		this.h= h;
 		this.vel=vel;
-		
-	
 	}
+	public Object clone()throws CloneNotSupportedException{  
+return super.clone();  
+}
 	public void moverect()
 	{	
 		if(x+vel<720 && x+vel>0)
@@ -114,12 +113,9 @@ class Block extends JFrame{
 	}
 	public void nextrect()
 	{	
-	
-	
-
 		y-=h;
 		x=0;
-		
+	
 	}
 	
 	@Override
@@ -131,13 +127,7 @@ class Block extends JFrame{
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
-			
-			
 			vel = 0;		
 		}
-	
 	}
-	
-
-	
 }
