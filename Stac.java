@@ -1,4 +1,4 @@
-package com.mini.project;
+
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.awt.*;
@@ -7,8 +7,11 @@ import java.util.*;
 
 @SuppressWarnings({ "serial", "unused" })
 class Stac extends JFrame{
+	static int cntr=0;
+	JLabel  t1;
 	Block blk = new Block();
 	Block nblk = new Block();
+	
 		Stac()
 		{   super("StackItUp!!!");
 			addKeyListener(new KeyListener() {
@@ -17,24 +20,41 @@ class Stac extends JFrame{
 				}
 				@Override
 				public void keyReleased(KeyEvent e) {
-			      //blk.keyReleased(e);
+					
+			      //nblk.keyReleased(e);
 				}
 				@Override
 				public void keyPressed(KeyEvent e) {
 					blk.keyPressed(e);
 					nblk.nextrect();
-				/*	if(blk.cntr>=1)
-					{nblk.keyPressed(e);
-				}*/}
+					 cntr++;
+				System.out.println(cntr);
+				t1.setText("SCORE :  "+cntr);
+					
+				//if(blk.cntr>=1)
+					//{nblk.keyPressed(e);
+				//}
+				}
 			});
+				t1 = new JLabel() ;
+			t1.setBounds(30,30,100,30) ; 
 			setFocusable(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(30,30,720,720);
+			setBounds(0,0,720,720);
 			setBackground(Color.darkGray);
 			setResizable(false);
 			setVisible(true);
 			
-			}		
+		
+			
+			
+			add(t1);
+			
+			}
+
+	
+	
+		
 		public void move() {
 			blk.moverect();
 			nblk.moverect();
@@ -60,16 +80,23 @@ class Stac extends JFrame{
 }
 @SuppressWarnings("serial")
 class Block extends JFrame{
-	int x,w,h,cntr,y;
+	
+	
+	
 	double vel=2.0;
+	int x=0,w=250,h=50,y=600;
+	 
 	Block(){
-		int x=0,w=250,h=50,cntr=0,y=600;
+		
+		
 		double vel=2.0;
 		this.x=x;
 		this.y=y;
 		this.w=w;
 		this.h= h;
 		this.vel=vel;
+		
+	
 	}
 	public void moverect()
 	{	
@@ -86,14 +113,15 @@ class Block extends JFrame{
 		 }
 	}
 	public void nextrect()
-	{	cntr+=1;
-	System.out.println(cntr);
-		y-=2*h;
+	{	
+	
+	
+
+		y-=h;
+		x=0;
 		
 	}
-	public void drop(){
-		
-	 }
+	
 	@Override
 	public void paint(Graphics g)
 	{
@@ -103,8 +131,13 @@ class Block extends JFrame{
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
+			
+			
 			vel = 0;		
 		}
 	
 	}
+	
+
+	
 }
