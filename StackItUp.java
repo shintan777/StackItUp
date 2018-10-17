@@ -7,13 +7,13 @@ import java.util.*;
 
 @SuppressWarnings({ "serial", "unused" })
 class StackItUp extends JFrame{
-	static int cntr=0;
+	static int cntr=0,t=0;
 	int i;
 	JLabel  t1;
 	
 
 	Block actual =new Block();
-	//Block nextblk =new Block();
+	Block nextblk =new Block();
 	
 	
 		StackItUp()
@@ -26,9 +26,12 @@ class StackItUp extends JFrame{
 			
 
 ArrayList<Block> b = new ArrayList();
-for( i=0;i<20;i++)
+for( i=0;i<30;i++)
 {
 	Block blk= new Block();
+	blk.y-=blk.h;
+	blk.x=0;
+	
 	b.add(blk);
 	
 }
@@ -46,11 +49,10 @@ for( i=0;i<20;i++)
 				public void keyPressed(KeyEvent e) {
 					
 					actual.keyPressed(e);
-					//blk.nextrect();
 					cntr++;
-				System.out.println(cntr);
-				actual=b.get(cntr);
-				actual.nextrect();
+				nextblk=b.get(t++);
+				
+				//nextblk.nextrect();
 				t1.setText("SCORE :  "+cntr);
 					
 				
@@ -59,23 +61,26 @@ for( i=0;i<20;i++)
 			setFocusable(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(720,720);
-			//setBackground(Color.darkGray);
+			
+			//setBackground(Color.red);
+			
 			setResizable(false);
 			setVisible(true);
 			add(t1);
+		
 			
 			}
 			
 		public void move() {
 			actual.moverect();
-			
+			nextblk.moverect();
 			
 		}
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
 			actual.paint(g);
-		
+		nextblk.paint(g);
 		
 			
 		}
@@ -94,7 +99,7 @@ for( i=0;i<20;i++)
 @SuppressWarnings("serial")
  class Block extends JFrame {
 	double vel=2.0;
-	int x=0,w=250,h=50,y=600;
+	int x=0,w=250,h=50,y=600,r=255,g=255,b=255;
 	 Block(){
 		double vel=2.0;
 		this.x=x;
@@ -103,9 +108,7 @@ for( i=0;i<20;i++)
 		this.h= h;
 		this.vel=vel;
 	}
- 	//public Object clone()throws CloneNotSupportedException{  
-//return super.clone(); 
-//}
+ 	
 
 	public void moverect()
 	{	
@@ -134,6 +137,7 @@ for( i=0;i<20;i++)
 	 g.setColor(Color.RED); 
 	 g.fillRect(x,y,w,h);
 	}
+	
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
