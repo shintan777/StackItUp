@@ -1,5 +1,8 @@
 import java.awt.event.KeyEvent;
 import javax.swing.*;
+
+
+
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -15,13 +18,12 @@ class StackItUp extends JFrame{
 	
 		StackItUp()
 		{super("StackItUp!!!");
-			   
-		        setSize(720,720);
+	     setSize(720,720);
 				setVisible(true);
 				t1 = new JLabel() ;
 				t1.setBounds(0,0,100,100) ; 
                 add(t1);
-			addKeyListener(new KeyListener() {
+		addKeyListener(new KeyListener() {
 				
 				@Override
 				public void keyTyped(KeyEvent e) {
@@ -32,6 +34,7 @@ class StackItUp extends JFrame{
 				@Override
 				public void keyPressed(KeyEvent e) {
 					actual.keyPressed(e);
+
 					xpos2=actual.x;
 					//xpos2=actual.x+actual.w;
 					System.out.println(xpos2+" "+xpos);
@@ -55,10 +58,16 @@ class StackItUp extends JFrame{
 				}
 			});
 			setFocusable(true);
+//			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//		setSize(720,720);
+		//	setResizable(false);
+			//setVisible(true);
+			//add(t1);
 		   
 			setResizable(false);
 			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 			}
 			
 		public void move() {
@@ -90,6 +99,7 @@ class StackItUp extends JFrame{
 	double vel=2.0;
 	int x=0,h=50,y=600,r=255,gn=255,b=255;
 	  int w;
+
 	 Block(){
 		 int r = (int)(Math.random()*((255+1)));
 		 int gn = (int)(Math.random()*((255+1)));
