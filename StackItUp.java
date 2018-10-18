@@ -9,8 +9,8 @@ import java.util.*;
 
 @SuppressWarnings({ "serial" })
 class StackItUp extends JFrame{
-	static int cntr=0,t=0;
-	int i;
+	static int cntr=0,t=0,width=250;
+	int i,xpos,xpos2,diff;
 	JLabel  t1;
 	Block actual =new Block();
 	Block nextblk =new Block();
@@ -18,12 +18,12 @@ class StackItUp extends JFrame{
 	
 		StackItUp()
 		{super("StackItUp!!!");
-			   
-		
+	     setSize(720,720);
+				setVisible(true);
 				t1 = new JLabel() ;
-				t1.setLocation(0,0) ; 
-
-			addKeyListener(new KeyListener() {
+				t1.setBounds(0,0,100,100) ; 
+                add(t1);
+		addKeyListener(new KeyListener() {
 				
 				@Override
 				public void keyTyped(KeyEvent e) {
@@ -34,25 +34,40 @@ class StackItUp extends JFrame{
 				@Override
 				public void keyPressed(KeyEvent e) {
 					actual.keyPressed(e);
+
+					xpos2=actual.x;
+					//xpos2=actual.x+actual.w;
+					System.out.println(xpos2+" "+xpos);
 					//ArrayList<Block> b = new ArrayList();
 					b.add(new Block());
-					System.out.println(b.size());
-					nextblk = b.get(cntr);
+					//System.out.println(b.size());
+					nextblk=b.get(cntr);
 					cntr++;
 					t1.setText("SCORE :  "+cntr);
-					//nextblk.nextrect();
-					//nextblk.keyPressed(e);
+					nextblk.w=width;
+					if(cntr==2)
+						diff=0;
+					else
+					{diff=Math.abs(xpos-xpos2);}
+					System.out.println(diff);
+					width-=diff;
+					xpos=xpos2;
 					nextblk.y-=nextblk.h*cntr;
 					//if(cntr>=8) nextblk.drop();
 					actual=nextblk;
 				}
 			});
 			setFocusable(true);
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setSize(720,720);
+//			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//		setSize(720,720);
+		//	setResizable(false);
+			//setVisible(true);
+			//add(t1);
+		   
 			setResizable(false);
-			setVisible(true);
-			add(t1);
+			
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 			}
 			
 		public void move() {
@@ -74,7 +89,7 @@ class StackItUp extends JFrame{
 			 {
 				rect.move();
 				rect.repaint();
-				Thread.sleep(15);	 
+				Thread.sleep(20);	 
 			 }
 		}
 	}
@@ -82,7 +97,9 @@ class StackItUp extends JFrame{
 @SuppressWarnings("serial")
  class Block extends JFrame{
 	double vel=2.0;
-	int x=0,w=250,h=50,y=600,r=255,gn=255,b=255;
+	int x=0,h=50,y=600,r=255,gn=255,b=255;
+	  int w;
+
 	 Block(){
 		 int r = (int)(Math.random()*((255+1)));
 		 int gn = (int)(Math.random()*((255+1)));
