@@ -1,5 +1,8 @@
 import java.awt.event.KeyEvent;
 import javax.swing.*;
+
+
+
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -11,19 +14,15 @@ class StackItUp extends JFrame{
 	JLabel  t1;
 	Block actual =new Block();
 	Block nextblk =new Block();
-
+	ArrayList<Block> b = new ArrayList<Block>();
+	
 		StackItUp()
-		{
+		{super("StackItUp!!!");
 			   
-		super("StackItUp!!!");
+		
 				t1 = new JLabel() ;
 				t1.setLocation(0,0) ; 
-				ArrayList<Block> b = new ArrayList<Block>();
-				Block blk= new Block();
-				//blk.y-=blk.h;
-				//blk.x=0;
-				//b.add(blk);
-				//actual=b.get(0);
+
 			addKeyListener(new KeyListener() {
 				
 				@Override
@@ -31,50 +30,42 @@ class StackItUp extends JFrame{
 				}
 				@Override
 				public void keyReleased(KeyEvent e) {
-				}
-				
+				}			
 				@Override
 				public void keyPressed(KeyEvent e) {
-					
 					actual.keyPressed(e);
-					cntr++;
 					//ArrayList<Block> b = new ArrayList();
-					//Block blk= new Block();
-					blk.y-=blk.h;
-					
-					//System.out.println(blk.y);
-					blk.x=0;
-					b.add(blk);
+					b.add(new Block());
 					System.out.println(b.size());
-					nextblk=b.get(t);
+					nextblk = b.get(cntr);
+					cntr++;
 					t1.setText("SCORE :  "+cntr);
-					//nextblk.keyPressed(e);
-					//if(cntr>=8) nextblk.drop();
 					//nextblk.nextrect();
+					//nextblk.keyPressed(e);
+					nextblk.y-=nextblk.h*cntr;
+					//if(cntr>=8) nextblk.drop();
+					actual=nextblk;
 				}
 			});
 			setFocusable(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(720,720);
-			
-			//setBackground(Color.red);
-			
 			setResizable(false);
 			setVisible(true);
 			add(t1);
-			
 			}
 			
 		public void move() {
-			actual.moverect();
+			//actual.moverect();
 			nextblk.moverect();
 			
 		}
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
-			actual.paint(g);
-			nextblk.paint(g);
+			//actual.paint(g);
+			for (Block nb : b) 
+			nb.paint(g);
 		}
 		public static void main(String[]args)throws InterruptedException {
 		{
@@ -83,26 +74,25 @@ class StackItUp extends JFrame{
 			 {
 				rect.move();
 				rect.repaint();
-				Thread.sleep(150);	 
+				Thread.sleep(15);	 
 			 }
 		}
 	}
 }
 @SuppressWarnings("serial")
- class Block extends JFrame {
+ class Block extends JFrame{
 	double vel=2.0;
 	int x=0,w=250,h=50,y=600,r=255,gn=255,b=255;
 	 Block(){
 		 int r = (int)(Math.random()*((255+1)));
 		 int gn = (int)(Math.random()*((255+1)));
 		 int b = (int)(Math.random()*((255+1)));
-			
-		 double vel=2.0;
+		//double vel=2.0;
 		this.x=x;
 		this.y=y;
 		this.w=w;
 		this.h= h;
-		this.vel=vel;
+		this.vel=2.0;
 		this.r=r;
 		this.gn=gn;
 		this.b=b;
@@ -141,7 +131,12 @@ class StackItUp extends JFrame{
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
-			vel = 0;		
+			this.vel = 0.000;		
 		}
 	}
+	
+	/*public Object clone() throws CloneNotSupportedException
+	{
+		return super.clone();
+	}*/
 }
