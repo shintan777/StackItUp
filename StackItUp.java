@@ -1,15 +1,16 @@
-
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.*;
+import java.util.Random;
 
 @SuppressWarnings({ "serial", "unused" })
 class StackItUp extends JFrame{
 	static int cntr=0,t=0;
 	int i;
 	JLabel  t1;
+	Random r=new Random();
 	
 
 	Block actual =new Block();
@@ -67,9 +68,25 @@ for( i=0;i<30;i++)
 			setResizable(false);
 			setVisible(true);
 			add(t1);
-		
+		for(int i=0;i<30;i++)
+		{
+			Block[i]=new Block(i,r.nextInt(255),r.nextInt(255),r.nextInt(255));
+		}
+
 			
 			}
+			
+		public void updateColors(){
+		for(int i=0;i<30;i++)
+		{
+			Block[i].setColor(r.nextInt(255),r.nextInt(255),r.nextInt(255));
+		}	
+		}
+		
+	    public void actionPerformed(ActionEvent arg0)
+		{
+			updateColors();
+		}
 			
 		public void move() {
 			actual.moverect();
@@ -81,6 +98,10 @@ for( i=0;i<30;i++)
 			super.paint(g);
 			actual.paint(g);
 		nextblk.paint(g);
+		for(int i=0;i<30;i++)
+		{
+			Block[i].draw(g);
+		}
 		
 			
 		}
@@ -99,14 +120,17 @@ for( i=0;i<30;i++)
 @SuppressWarnings("serial")
  class Block extends JFrame {
 	double vel=2.0;
-	int x=0,w=250,h=50,y=600,r=255,g=255,b=255;
-	 Block(){
+	int x=0,w=250,h=50,y=600,R,G,B;
+	 Block(int R,int G,int B){
 		double vel=2.0;
 		this.x=x;
 		this.y=y;
 		this.w=w;
 		this.h= h;
 		this.vel=vel;
+		this.R=R;
+		this.G=G;
+		this.B=B;
 	}
  	
 
@@ -134,10 +158,16 @@ for( i=0;i<30;i++)
 	@Override
 	public void paint(Graphics g)
 	{
-	 g.setColor(Color.RED); 
+	 g.setColor(new Color(R,G.B)); 
 	 g.fillRect(x,y,w,h);
 	}
 	
+	public void setColor(int R,int G,int B)
+	{
+		this.R=R;
+		this.G=G;
+		this.B=B;
+	}
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
