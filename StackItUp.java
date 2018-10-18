@@ -12,9 +12,8 @@ class StackItUp extends JFrame{
 	JLabel  t1;
 	
 
-	Block actual =new Block();
-	Block nextblk =new Block();
-	
+		Block[] b= new Block[30];
+
 	
 		StackItUp()
 		{
@@ -25,16 +24,10 @@ class StackItUp extends JFrame{
 			
 			
 
-ArrayList<Block> b = new ArrayList();
-for( i=0;i<30;i++)
-{
-	Block blk= new Block();
-	blk.y-=blk.h;
-	blk.x=0;
-	
-	b.add(blk);
-	
-}
+//ArrayList<Block> b = new ArrayList();
+    for (int i = 0; i < b.length; i++)
+            b[i] = new Block();
+    
 //actual=b.get(0);
 			addKeyListener(new KeyListener() {
 				
@@ -48,11 +41,12 @@ for( i=0;i<30;i++)
 				@Override
 				public void keyPressed(KeyEvent e) {
 					
-					actual.keyPressed(e);
+					b[t].keyPressed(e);
+					t++;
+					
+					//nextblk=b.get(t);
+					b[t].nextrect();
 					cntr++;
-				nextblk=b.get(t++);
-				
-				//nextblk.nextrect();
 				t1.setText("SCORE :  "+cntr);
 					
 				
@@ -61,26 +55,26 @@ for( i=0;i<30;i++)
 			setFocusable(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(720,720);
-			
-			//setBackground(Color.red);
-			
 			setResizable(false);
 			setVisible(true);
 			add(t1);
-		
-			
 			}
 			
 		public void move() {
-			actual.moverect();
-			nextblk.moverect();
+			 for (Block ablock : b) ablock.moverect();
+			//actual.moverect();
+			//nextblk.moverect();
 			
 		}
 		@Override
 		public void paint(Graphics g) {
-			super.paint(g);
-			actual.paint(g);
-		nextblk.paint(g);
+		g.setColor(Color.black);
+		for (Block ablk : b) {
+            ablk.paint(g);
+        }
+			
+		//actual.paint(g);
+		//nextblk.paint(g);
 		
 			
 		}
@@ -141,7 +135,9 @@ for( i=0;i<30;i++)
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
-			vel = 0;		
+			vel = 0;	
+			
+			
 		}
 	}
 }
