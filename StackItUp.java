@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.*;
 import java.io.*;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 @SuppressWarnings({ "serial" })
 class StackItUp extends JFrame{
@@ -73,6 +75,11 @@ class StackItUp extends JFrame{
 		public static void main(String[]args)throws InterruptedException {
 		{
 			 StackItUp rect=new StackItUp();
+			 File Sal= new File("Sal.wav");
+			 
+	         PlaySound(Sal);
+			 
+			 
 			 while(true)
 			 {
 				rect.move();
@@ -109,22 +116,23 @@ loop= new ContinousAudioDataStream(MD);
 }
 
 }*/
-public static synchronized void playSound(final String url) {
-  new Thread(new Runnable() {
-  // The wrapper thread is unnecessary, unless it blocks on the
-  // Clip finishing; see comments.
-    public void run() {
-      try {
-        Clip clip = AudioSystem.getClip();
-        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-          Main.class.getResourceAsStream("Sound.wav" + url));
-        clip.open(inputStream);
-        clip.start(); 
-      } catch (Exception e) {
-        System.err.println(e.getMessage());
-      }
-    }
-  }).start();
+class Music
+{
+	
+	static void PlaySound(File Sound)
+	{
+		try{
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(Sound));
+			clip.start();
+			
+			Thread.sleep(clip.getMicrosecondLength()/1000);
+			
+		}catch(Exception e)
+		{
+			
+		}
+	}
 }
 @SuppressWarnings("serial")
  class Block extends JFrame{
