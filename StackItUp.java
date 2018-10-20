@@ -1,9 +1,5 @@
-
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-
-//import sun.audio.*;
-
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -16,7 +12,6 @@ class StackItUp extends JFrame{
 	static int cntr=0,t=0;
 	int i;
 	JLabel  t1;
-	Block actual =new Block();
 	Block nextblk =new Block();
 	ArrayList<Block> b = new ArrayList<Block>();
 	
@@ -27,7 +22,7 @@ class StackItUp extends JFrame{
 				t1 = new JLabel() ;
 				t1.setLocation(0,0) ; 
 
-			addKeyListener(new KeyListener() {
+				addKeyListener(new KeyListener() {
 				
 				@Override
 				public void keyTyped(KeyEvent e) {
@@ -37,15 +32,11 @@ class StackItUp extends JFrame{
 				}			
 				@Override
 				public void keyPressed(KeyEvent e) {
-					actual.keyPressed(e);
-					//ArrayList<Block> b = new ArrayList();
 					b.add(new Block());
 					System.out.println(b.size());
 					nextblk = b.get(cntr);
 					cntr++;
 					t1.setText("SCORE :  "+cntr);
-					//nextblk.nextrect();
-					//nextblk.keyPressed(e);
 					nextblk.y-=nextblk.h*cntr;
 					//if(cntr>=8) nextblk.drop();
 					actual=nextblk;
@@ -61,25 +52,20 @@ class StackItUp extends JFrame{
 			}
 			
 		public void move() {
-			//actual.moverect();
 			nextblk.moverect();
 			
 		}
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
-			//actual.paint(g);
 			for (Block nb : b) 
 			nb.paint(g);
 		}
 		public static void main(String[]args)throws InterruptedException {
 		{
 			 StackItUp rect=new StackItUp();
-			 File Sal= new File("Sal.wav");
-			 
-	         PlaySound(Sal);
-			 
-			 
+			 File Sal= new File("Sal.wav"); 
+	         	PlaySound(Sal);
 			 while(true)
 			 {
 				rect.move();
@@ -189,9 +175,4 @@ class Music
 			this.vel = 0.000;		
 		}
 	}
-	
-	/*public Object clone() throws CloneNotSupportedException
-	{
-		return super.clone();
-	}*/
 }
