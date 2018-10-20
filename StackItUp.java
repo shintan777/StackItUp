@@ -39,7 +39,7 @@ class StackItUp extends JFrame{
 					t1.setText("SCORE :  "+cntr);
 					nextblk.y-=nextblk.h*cntr;
 					//if(cntr>=8) nextblk.drop();
-					actual=nextblk;
+					//actual=nextblk;
 					//sound();
 				}
 			});
@@ -61,11 +61,11 @@ class StackItUp extends JFrame{
 			for (Block nb : b) 
 			nb.paint(g);
 		}
-		public static void main(String[]args)throws InterruptedException {
+		public static void main(String[]args)throws InterruptedException 
 		{
 			 StackItUp rect=new StackItUp();
-			 File Sal= new File("Sal.wav"); 
-	         	PlaySound(Sal);
+			 File abc = new File("bg.wav"); 
+	         PlaySound(abc);
 			 while(true)
 			 {
 				rect.move();
@@ -73,39 +73,8 @@ class StackItUp extends JFrame{
 				Thread.sleep(15);	 
 			 }
 		}
-	}
-}
-/*class Sound
-{
 	
-public static class AL implements ActionListener{
-	public final void actionPerformed(ActionEvent e)
-	{
-		sound();
-	}
-}
-	
-public static void sound(){
-	
-	AudioPlayer MGP = AudioPlayer.player;
-	AudioStream BGM;
-	AudioData MD;
-ContinousAudioDataStream loop=null;
-
-try{
-BGM =new AudioStream(new FileInputStream("Sound.wav"));
-MD =BGM.getData();
-loop= new ContinousAudioDataStream(MD);
-}catch(IOException error){}
-	
-	MGP.start(loop);
-}
-
-}*/
-class Music
-{
-	
-	static void PlaySound(File Sound)
+	public static void PlaySound(File Sound)
 	{
 		try{
 			Clip clip = AudioSystem.getClip();
@@ -120,6 +89,7 @@ class Music
 		}
 	}
 }
+
 @SuppressWarnings("serial")
  class Block extends JFrame{
 	double vel=2.0;
