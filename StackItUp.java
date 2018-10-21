@@ -11,7 +11,7 @@ import java.util.*;
 @SuppressWarnings({ "serial" })
 class StackItUp extends JFrame{
 	static int cntr=0,t=0;
-	int i,xpos,xpos2,diff;
+	int i,xpos,xpos2,diff,h1;
 	JLabel  t1 = new JLabel();
 	Block nextblk =new Block();
 	ArrayList<Block> b = new ArrayList<Block>();
@@ -39,14 +39,15 @@ class StackItUp extends JFrame{
 				nextblk.y-=nextblk.h*cntr;
 				}
 				else {
+					
 					b.add(new Block());
 					Block temp = b.get(b.size()-1);
-					temp.y+=2*temp.h;
+					//temp.y+=temp.h;
 					nextblk =temp;
-					cntr++;
-					t1.setText("SCORE :  "+cntr);//score needs to be corrected
+					t1.setText("SCORE :  "+(cntr-1));//score needs to be corrected
 					//nextblk.y-=nextblk.h*cntr;
-					nextblk.y-=nextblk.h*(cntr+1);
+					nextblk.y-=550;
+					cntr++;
 					drop();
 				}
 			}
@@ -63,7 +64,7 @@ class StackItUp extends JFrame{
 		public void move() {
 			nextblk.moverect();
 		}
-		@Override
+		
 		public void paint(Graphics g) {
 			super.paint(g);
 			for (Block nb : b) 
