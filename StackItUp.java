@@ -1,6 +1,6 @@
-
- import java.awt.event.KeyEvent;
-
+import java.awt.event.KeyEvent;
+//javac StackItUp.java
+//java StackItUp
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -8,19 +8,31 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.*;
+import javax.swing.JPanel;
 
 @SuppressWarnings({ "serial" })
 class StackItUp extends JFrame{
 	static int cntr=0,t=0;
-	int i,xpos,xpos2,diff,h1;
-	JLabel  t1 = new JLabel();
+	int i,x1,x2,diff,xe1,xe2,width=250,yc=650;
 	Block nextblk =new Block();
+	Block temp =new Block();
 	ArrayList<Block> b = new ArrayList<Block>();
 	
+	//JPanel panel;
+	
 	StackItUp()
-	{super("StackItUp!!!");
-
-	        t1.setForeground(Color.WHITE);
+	{
+    super("StackItUp");
+	
+	JPanel newPanel = new JPanel();
+	newPanel.setBackground(Color.BLACK);
+	JLabel  t1 = new JLabel();
+	t1.setBounds(10,10,50,50);
+	t1.setForeground(Color.WHITE);
+		newPanel.add(t1);
+		add(newPanel);
+		
+       
 			addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -33,11 +45,13 @@ class StackItUp extends JFrame{
 				if(cntr<10)		
 				{	
 					b.add(new Block());
-				nextblk = b.get(cntr);
-				xpos2=nextblk.x;
-				cntr++;
-				t1.setText("SCORE :  "+cntr);//score needs to be corrected
-				nextblk.y-=nextblk.h*cntr;
+					nextblk = b.get(cntr);
+					nextblk.w=width;
+					//xpos2=nextblk.x;
+					cntr++;
+					t1.setText("SCORE :  "+cntr);//score needs to be corrected
+					nextblk.y-=nextblk.h*cntr;
+				
 				}
 				else {
 					
@@ -48,19 +62,24 @@ class StackItUp extends JFrame{
 					t1.setText("SCORE :  "+(cntr-1));//score needs to be corrected
 					//nextblk.y-=nextblk.h*cntr;
 					nextblk.y-=550;
+					nextblk.w=width;
 					cntr++;
 					drop();
 				}
 			}
 		});
-			t1.setLocation(0,-250) ;
-			setFocusable(true);
+			
+			//setFocusable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(720,720);
-		setResizable(false);
+	    setResizable(false);
+	    
+		//getContentPane().setBackground(Color.BLACK);
 		setVisible(true);
-		getContentPane().setBackground(Color.BLACK);
-		add(t1);
+    
+		
+		
+		
 		}
 			
 		public void move() {
@@ -75,7 +94,6 @@ class StackItUp extends JFrame{
 		void drop()
 		{ 	for (Block nb : b)
 				{nb.y+=nb.h;
-				
 				}
 		}
 		
@@ -97,13 +115,21 @@ class StackItUp extends JFrame{
 		
 		
 		public static void main(String[]args)throws InterruptedException {
-		{
-			 StackItUp rect=new StackItUp();
+		{  
+		//JFrame frame = new JFrame();
+		
+	    
+		StackItUp rect=new StackItUp();
+		//JPanel panel = (JPanel) frame.getContentPane();
+		//panel.setLayout(null);
+		//JLabel  t1 = new JLabel();
+		
+			 
 			 while(true)
 			 {
 				rect.move();
 				rect.repaint();
-				Thread.sleep(10);	 
+				Thread.sleep(20);	 
 			 }
 		}
 	}
@@ -111,7 +137,8 @@ class StackItUp extends JFrame{
 @SuppressWarnings("serial")
  class Block extends JFrame{
 	double vel=2.0;
-	int x=0,w=250,h=50,y=650,r=255,gn=255,b=255;
+	int x,w,h=50,y=650,r=255,gn=255,b=255;
+	//int x,w,h=50,y=650,r,gn,b;
 	 Block(){
 		 int r = (int)(Math.random()*((255+1)));
 		 int gn = (int)(Math.random()*((255+1)));
@@ -121,7 +148,7 @@ class StackItUp extends JFrame{
 		this.y=y;
 		this.w=w;
 		this.h= h;
-		this.vel=2.0;
+		this.vel=vel;
 		this.r=r;
 		this.gn=gn;
 		this.b=b;
