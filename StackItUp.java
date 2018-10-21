@@ -1,4 +1,5 @@
-import java.awt.event.KeyEvent;
+
+ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -19,7 +20,7 @@ class StackItUp extends JFrame{
 	StackItUp()
 	{super("StackItUp!!!");
 
-	
+	        t1.setForeground(Color.WHITE);
 			addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -58,6 +59,7 @@ class StackItUp extends JFrame{
 		setSize(720,720);
 		setResizable(false);
 		setVisible(true);
+		getContentPane().setBackground(Color.BLACK);
 		add(t1);
 		}
 			
