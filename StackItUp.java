@@ -25,16 +25,12 @@ class StackItUp extends JFrame{
 	StackItUp()
 	{
     super("StackItUp");
-	JLabel background;
-	ImageIcon img = new ImageIcon("sal.jpg");
-	background = new JLabel("",img,JLabel.CENTER);
-	background.setBounds(0,0,720,720);
-	add(background);
+	
 	JPanel newPanel = new JPanel();
 	newPanel.setBackground(Color.BLACK);
 	JLabel  t1 = new JLabel();
 	t1.setBounds(10,10,50,50);
-	t1.setForeground(Color.BLACK);
+	t1.setForeground(Color.WHITE);
 		newPanel.add(t1);
 		add(newPanel);
 		
