@@ -5,7 +5,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
 import javax.swing.*;
 import java.io.*;
 import java.awt.*;
@@ -21,7 +20,6 @@ class StackItUp extends JFrame{
 	Block temp =new Block();
 	ArrayList<Block> b = new ArrayList<Block>();
 	
-
 	StackItUp()
 	{
     super("StackItUp");
@@ -33,19 +31,16 @@ class StackItUp extends JFrame{
 	t1.setForeground(Color.WHITE);
 		newPanel.add(t1);
 		add(newPanel);
-		
-
 		File bg =  new File(".//bg.wav");
 		try {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(bg);
 			Clip clip = AudioSystem.getClip();
 			clip.open(ais);
 			clip.start();
-			
+			clip.loop(cntr);
 		
 		
 		} catch(Exception e) {System.out.println(e);}
-
        
 			addKeyListener(new KeyListener() {
 			@Override
@@ -53,6 +48,7 @@ class StackItUp extends JFrame{
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
+				
 			}			
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -64,7 +60,6 @@ class StackItUp extends JFrame{
 					//xpos2=nextblk.x;
 					cntr++;
 					t1.setText("SCORE :  "+(cntr-1));//score needs to be corrected
-
 					nextblk.y-=nextblk.h*cntr;
 				
 				}
@@ -72,7 +67,6 @@ class StackItUp extends JFrame{
 					
 					b.add(new Block());
 					Block temp = b.get(b.size()-1);
-
 					nextblk =temp;
 					t1.setText("SCORE :  "+(cntr-1));//score needs to be corrected
 					nextblk.y-=550;
@@ -80,15 +74,24 @@ class StackItUp extends JFrame{
 					cntr++;
 					drop();
 				}
+			if(cntr>1)
+				{File bg =  new File(".//drop.wav");
+				try {
+					AudioInputStream ais = AudioSystem.getAudioInputStream(bg);
+					Clip clip = AudioSystem.getClip();
+					clip.open(ais);
+					clip.start();
+					
+				} catch(Exception e1) {System.out.println(e1);}
+		       
 			}
-		});
+		}
+	});
 			
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(720,720);
 	    setResizable(false);
 	   	setVisible(true);
-
 		}
 			
 		public void move() {
@@ -104,7 +107,6 @@ class StackItUp extends JFrame{
 		{ 	for (Block nb : b)
 				{nb.y+=nb.h;
 				}
-
 		}	
 		
 		public static void main(String[]args)throws InterruptedException {
@@ -116,7 +118,6 @@ class StackItUp extends JFrame{
 				rect.move();
 				rect.repaint();
 				Thread.sleep(15);	 
-
 			 }
 		}
 	}
@@ -125,7 +126,6 @@ class StackItUp extends JFrame{
  class Block extends JFrame{
 	double vel=2.0;
 	int x,w,h=50,y=650,r=255,gn=255,b=255;
-
 	 Block(){
 		 int r = (int)(Math.random()*((255+1)));
 		 int gn = (int)(Math.random()*((255+1)));
@@ -163,15 +163,14 @@ class StackItUp extends JFrame{
 	@Override
 	public void paint(Graphics g)
 	{
-
 	 g.setColor(new Color(r, gn, b));
-
 	 g.fillRect(x,y,w,h);
 	}
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
-			this.vel = 0.000;		
+			this.vel = 0.000;
+			
 		}
 	}
 }
