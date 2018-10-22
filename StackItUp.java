@@ -1,11 +1,9 @@
 import java.awt.event.KeyEvent;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
 import javax.swing.*;
 import java.io.*;
 import java.awt.*;
@@ -17,14 +15,21 @@ import javax.swing.JPanel;
 class StackItUp extends JFrame{
 	static int cntr=0,t=0;
 	int i,x1,x2,diff,xe1,xe2,width=250,yc=650;
+	Block blk =new Block();
 	Block nextblk =new Block();
 	Block temp =new Block();
+	Block temp2 =new Block();
 	ArrayList<Block> b = new ArrayList<Block>();
 	
 
 	StackItUp()
 	{
     super("StackItUp");
+	JLabel background;
+	ImageIcon img = new ImageIcon("sal.jpg");
+	background = new JLabel("",img,JLabel.CENTER);
+	background.setBounds(0,0,720,720);
+	add(background);
 	
 	JPanel newPanel = new JPanel();
 	newPanel.setBackground(Color.BLACK);
@@ -56,30 +61,65 @@ class StackItUp extends JFrame{
 			}			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(cntr<10)		
+				if(width>0)
 				{	
+				
 					b.add(new Block());
 					nextblk = b.get(cntr);
 					nextblk.w=width;
-					//xpos2=nextblk.x;
-					cntr++;
-					t1.setText("SCORE :  "+(cntr-1));//score needs to be corrected
-
-					nextblk.y-=nextblk.h*cntr;
-				
-				}
-				else {
+					if(cntr>0)
+					{	temp=b.get(cntr-1);
+				        x1=temp.x;
+						xe1=temp.x+temp.w;
+						System.out.println(x1+"  "+xe1);
+						if(cntr>1)
+						{temp2=b.get(cntr-2);
+				        x2=temp2.x;
+						xe2=temp2.x+temp2.w;
+						System.out.println(x2+"  "+xe2);
+						System.out.println("  \n");
+					if(x1<=x2&&xe1>=x2)
+					{
+						diff=x2-x1;
+						//blk=b.get(cntr-2);
+						//blk.x=x2;
+						
+						}
+			        else if(x1<=x2&&xe1<x2)	
+					{
+						diff=width;
+						
+					}
+					else if(x1>x2&&x1<=xe2)	
+					{
+						diff=xe1-xe2;
+						
+					}
+					else if(x1>x2&&x1>xe2){
+						diff=width;
+					}
 					
-					b.add(new Block());
-					Block temp = b.get(b.size()-1);
-
-					nextblk =temp;
-					t1.setText("SCORE :  "+(cntr-1));//score needs to be corrected
-					nextblk.y-=550;
-					nextblk.w=width;
+						}
+					
+					
+					width-=diff;	
+					}
+					if(cntr<10)	
+					nextblk.y-=nextblk.h*cntr;
+				else {
+					nextblk.y-=500;
+				drop();
+					}
+					
+					
 					cntr++;
-					drop();
-				}
+					t1.setText("SCORE :  "+(cntr-1));
+			}
+			else
+			{
+				t1.setText("GAME OVER YOUR SCORE:"+(cntr-1));
+				
+			}
 			}
 		});
 			
@@ -175,3 +215,8 @@ class StackItUp extends JFrame{
 		}
 	}
 }
+
+
+
+//w-=cum_diff
+//cum_diff+=diff
