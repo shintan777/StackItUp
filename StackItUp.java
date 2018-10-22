@@ -1,6 +1,10 @@
 import java.awt.event.KeyEvent;
+
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.io.*;
 import java.awt.*;
@@ -28,6 +32,16 @@ class StackItUp extends JFrame{
 		newPanel.add(t1);
 		add(newPanel);
 		
+		File bg =  new File(".//bg.wav");
+		try {
+			AudioInputStream ais = AudioSystem.getAudioInputStream(bg);
+			Clip clip = AudioSystem.getClip();
+			clip.open(ais);
+			clip.start();
+			
+		
+		
+		} catch(Exception e) {System.out.println(e);}
        
 			addKeyListener(new KeyListener() {
 			@Override
@@ -45,7 +59,7 @@ class StackItUp extends JFrame{
 					nextblk.w=width;
 					//xpos2=nextblk.x;
 					cntr++;
-					t1.setText("SCORE :  "+cntr);//score needs to be corrected
+					t1.setText("SCORE :  "+(cntr-1));//score needs to be corrected
 					nextblk.y-=nextblk.h*cntr;
 				
 				}
@@ -82,24 +96,7 @@ class StackItUp extends JFrame{
 		{ 	for (Block nb : b)
 				{nb.y+=nb.h;
 				}
-		}
-		
-		/*public static void PlaySound(File Sound)
-		{
-			try{
-				Clip clip = AudioSystem.getClip();
-				clip.open(AudioSystem.getAudioInputStream(Sound));
-				clip.start();
-				
-				Thread.sleep(clip.getMicrosecondLength()/1000);
-				
-			}catch(Exception e)
-			{
-				
-			}
-		}
-*/
-		
+		}	
 		
 		public static void main(String[]args)throws InterruptedException {
 		{  
