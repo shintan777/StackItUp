@@ -1,3 +1,4 @@
+
 import java.awt.event.KeyEvent;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -21,19 +22,16 @@ class StackItUp extends JFrame{
 	Block temp2 =new Block();
 	ArrayList<Block> b = new ArrayList<Block>();
 	
-
+	int x_left = 0, x_right = 720;
+JLabel  t1 = new JLabel();
 	StackItUp()
 	{
     super("StackItUp");
-	JLabel background;
-	ImageIcon img = new ImageIcon("sal.jpg");
-	background = new JLabel("",img,JLabel.CENTER);
-	background.setBounds(0,0,720,720);
-	add(background);
 	
+	JLabel  t1 = new JLabel();
+	this.t1=t1;
 	JPanel newPanel = new JPanel();
 	newPanel.setBackground(Color.BLACK);
-	JLabel  t1 = new JLabel();
 	t1.setBounds(10,10,50,50);
 	t1.setForeground(Color.WHITE);
 		newPanel.add(t1);
@@ -46,12 +44,13 @@ class StackItUp extends JFrame{
 			Clip clip = AudioSystem.getClip();
 			clip.open(ais);
 			clip.start();
-			
-		
 		
 		} catch(Exception e) {System.out.println(e);}
 
-       
+		b.add(new Block());
+		nextblk = b.get(cntr);
+		nextblk.w=width;
+		cntr++;
 			addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -63,47 +62,37 @@ class StackItUp extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				if(width>0)
 				{	
-				
-					b.add(new Block());
-					nextblk = b.get(cntr);
-					nextblk.w=width;
+					
 					if(cntr>0)
 					{	temp=b.get(cntr-1);
 				        x1=temp.x;
 						xe1=temp.x+temp.w;
-						System.out.println(x1+"  "+xe1);
-						if(cntr>1)
+						if(xe1<x_left||x1>x_right) {
+							temp.w = 0;
+						}
+						else if(x1<x_left) {
+							temp.x = x_left;
+							temp.w -= x_left - x1;
+						}
+						else if(xe1>x_right) {
+							temp.w -= (xe1 - x_right);
+						}
+						x_left = temp.x;
+						x_right = temp.x+temp.w;
+						width = temp.w;
+						System.out.println("prev blk"+x1+"  "+xe1);
+						/*if(cntr>1)
 						{temp2=b.get(cntr-2);
 				        x2=temp2.x;
 						xe2=temp2.x+temp2.w;
-						System.out.println(x2+"  "+xe2);
+						System.out.println("prev of prev"+x2+"  "+xe2);
 						System.out.println("  \n");
-					if(x1<=x2&&xe1>=x2)
-					{
-						diff=x2-x1;
-						//blk=b.get(cntr-2);
-						//blk.x=x2;
 						
-						}
-			        else if(x1<=x2&&xe1<x2)	
-					{
-						diff=width;
-						
+						}*/
 					}
-					else if(x1>x2&&x1<=xe2)	
-					{
-						diff=xe1-xe2;
-						
-					}
-					else if(x1>x2&&x1>xe2){
-						diff=width;
-					}
-					
-						}
-					
-					
-					width-=diff;	
-					}
+					b.add(new Block());
+					nextblk = b.get(cntr);
+					nextblk.w=width;
 					if(cntr<10)	
 					nextblk.y-=nextblk.h*cntr;
 				else {
@@ -114,11 +103,23 @@ class StackItUp extends JFrame{
 					
 					cntr++;
 					t1.setText("SCORE :  "+(cntr-1));
+					if(cntr>1)
+					{File bg =  new File(".//drop.wav");
+					try {
+						AudioInputStream ais = AudioSystem.getAudioInputStream(bg);
+						Clip clip = AudioSystem.getClip();
+						clip.open(ais);
+						clip.start();
+						
+					} catch(Exception e1) {System.out.println(e1);}
+			       
+				}
 			}
 			else
 			{
 				t1.setText("GAME OVER YOUR SCORE:"+(cntr-1));
-				
+				nextblk.vel=0.0;
+			
 			}
 			}
 		});
@@ -146,6 +147,12 @@ class StackItUp extends JFrame{
 				}
 
 		}	
+		void game_over()
+		{
+			
+		t1.setText("GAME OVER YOUR SCORE:"+(cntr-1));
+				nextblk.vel=0.0;	
+		}
 		
 		public static void main(String[]args)throws InterruptedException {
 		{  
@@ -155,7 +162,7 @@ class StackItUp extends JFrame{
 			 {
 				rect.move();
 				rect.repaint();
-				Thread.sleep(15);	 
+				Thread.sleep(8);	 
 
 			 }
 		}
